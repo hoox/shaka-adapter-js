@@ -1,0 +1,33 @@
+.DS_Store
+*.swp
+*.swo
+*.orig
+.idea
+ext/
+.vscode
+
+# Dependency folders
+node_modules
+bower_components
+
+# temp and output
+coverage/
+docs/
+tmp/
+deploy/
+dist/
+
+#logs
+*.log
+
+#Configs
+jsconfig.json
+.yo-rc.json
+
+#npm ignore
+spec/
+gulpfile.js
+.jsbeautifyrc
+.eslintrc
+samples/
+bitbucket-pipelines.yml

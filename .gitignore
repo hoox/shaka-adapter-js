@@ -1,0 +1,26 @@
+.DS_Store
+*.swp
+*.swo
+*.orig
+.idea
+ext/
+.vscode
+
+# Dependency folders
+node_modules
+bower_components
+
+# temp and output
+coverage/
+docs/
+tmp/
+deploy/
+dist/
+
+#Configs
+jsconfig.json
+manifest.json
+.yo-rc.json
+
+#logs
+*.log

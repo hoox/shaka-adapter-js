@@ -1,0 +1,20 @@
+{
+  "installedESLint": true,
+  "extends": "standard",
+  "env": {
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 5,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "standard",
+    "node"
+  ],
+  "globals": {
+    "XMLHttpRequest": true,
+    "ActiveXObject": true,
+    "DateTime": true
+  }
+}

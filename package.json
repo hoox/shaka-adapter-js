@@ -1,0 +1,30 @@
+{
+  "name": "youbora-adapter-shaka2",
+  "version": "6.1.0",
+  "main": "src/adapter.js",
+  "description": "Youbora adapter for shaka2",
+  "scripts": {
+    "build": "npm run manifest && webpack -p",
+    "watch": "npm run manifest && webpack -p --progress --color --watch",
+    "deployable": "npm run build && youbora-util deployable",
+    "manifest": "youbora-util manifest",
+    "preversion": "npm run build",
+    "clean": "rm -rf dist deploy manifest.json"
+  },
+  "dependencies": {
+    "youboralib": "6.1.X"
+  },
+  "devDependencies": {
+    "webpack": "^2.2.1",
+    "youboralib-util": "1.3.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/npaw/shaka2-adapter-js"
+  },
+  "author": "Jesus Lopez",
+  "license": "MIT",
+  "bugs": {
+    "email": "support@nicepeopleatwork.com"
+  }
+}
