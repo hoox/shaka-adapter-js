@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <video id="video1" width="640" height="480" crossorigin="anonymous" controls>
+  <video id="video1" width="640" height="480" crossorigin="anonymous" controls autoplay>
         Your browser does not support HTML5 video.
     </video>
   <script>
@@ -31,7 +31,7 @@
       window.player = player;
 
       /* Dash */
-      var source = 'https://turtle-tube.appspot.com/t/t2/dash.mpd';
+      var source = 'http://vm2.dashif.org/livesim/segtimeline_1/testpic_2s/Manifest.mpd';
 
 
           // init plugin
@@ -41,8 +41,7 @@
       window.plugin = new youbora.Plugin({
         'accountCode': 'powerdev',
         'parse.CDNNode': true,
-        'content.title': 'Title vod dash',
-        'content.transactionCode': "transactionTest",
+        'content.title': 'Title vod dash'
       })
 
       plugin.setAdapter(new youbora.adapters.Shaka2(player))

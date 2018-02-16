@@ -41,6 +41,7 @@ youbora.adapters.Shaka2 = youbora.Adapter.extend({
 
   /** Override to return video duration */
   getDuration: function () {
+    if (this.getIsLive) return 0
     return this.tag.duration
   },
 
@@ -102,6 +103,7 @@ youbora.adapters.Shaka2 = youbora.Adapter.extend({
     // References
     this.references = []
     this.references['play'] = this.playListener.bind(this)
+    this.references['loadstart'] = this.autoplayListener.bind(this)
     this.references['pause'] = this.pauseListener.bind(this)
     this.references['playing'] = this.playingListener.bind(this)
     this.references['error'] = this.errorListener.bind(this)
@@ -131,7 +133,13 @@ youbora.adapters.Shaka2 = youbora.Adapter.extend({
 
   /** Listener for 'play' event. */
   playListener: function (e) {
-    this.fireStart()
+    if (this.getResource())
+      this.fireStart()
+  },
+
+  /** Listener for 'play' event. */
+  autoplayListener: function (e) {
+    if (this.tag.autoplay) this.fireStart()
   },
 
   /** Listener for 'pause' event. */
@@ -147,7 +155,44 @@ youbora.adapters.Shaka2 = youbora.Adapter.extend({
 
   /** Listener for 'error' event. */
   errorListener: function (e) {
-    this.fireError(e.detail.code)
+    var msg = "unknown"
+    // Error codes: https://shaka-player-demo.appspot.com/docs/api/shaka.util.Error.html
+    switch (e.category) {
+      case 1:
+        msg = "network"
+        break
+      case 2:
+        msg = "text"
+        break
+      case 3:
+        msg = "media"
+        break
+      case 4:
+        msg = "manifest"
+        break
+      case 5:
+        msg = "streaming"
+        break
+      case 6:
+        msg = "drm"
+        break
+      case 7:
+        msg = "player"
+        break
+      case 8:
+        msg = "cast"
+        break
+      case 9:
+        msg = "storage"
+    }
+    if (e.detail && e.detail.code) {
+      this.fireError(e.detail.code, msg)
+    } else {
+      this.fireError(e.code, msg)
+    }
+    if (e.severity && e.severity === 2) { // Critical
+      this.fireStop()
+    }
   },
 
   /** Listener for 'seeking' event. */
