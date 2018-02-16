@@ -45,16 +45,18 @@
       })
 
       plugin.setAdapter(new youbora.adapters.Shaka2(player))
-    }
 
-      // Load the source into the Player.
-      player.load(source).catch(function(error) {
-        plugin.getAdapter().fireError(error.code);
-      });
-    }
-    document.addEventListener('DOMContentLoaded', initPlayer);
+// Load the source into the Player.
+player.load(source).catch(function(error) {
+  plugin.getAdapter().fireError(error.code);
+});
+} else {
+player.load(source)
+}
+}
+document.addEventListener('DOMContentLoaded', initPlayer);
 
-  </script>
+</script>
 </body>
 
 </html>

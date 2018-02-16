@@ -41,16 +41,19 @@
       window.plugin = new youbora.Plugin({
         'accountCode': 'powerdev',
         'parse.CDNNode': true,
-        'content.title': 'Title vod dash'
+        'content.title': 'Title vod dash',
+        'content.transactionCode': "transactionTest",
       })
 
       plugin.setAdapter(new youbora.adapters.Shaka2(player))
-    }
 
       // Load the source into the Player.
       player.load(source).catch(function(error) {
         plugin.getAdapter().fireError(error.code);
       });
+    } else {
+      player.load(source)
+    }
     }
     document.addEventListener('DOMContentLoaded', initPlayer);
 
