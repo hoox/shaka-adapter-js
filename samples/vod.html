@@ -35,7 +35,7 @@
 
 
           // init plugin
-    if (typeof youbora != undefined &&
+    if (typeof youbora != "undefined" &&
       typeof youbora.adapters.Shaka2 != "undefined") {
       youbora.Log.logLevel = youbora.Log.Level.DEBUG
       window.plugin = new youbora.Plugin({
@@ -46,14 +46,12 @@
       })
 
       plugin.setAdapter(new youbora.adapters.Shaka2(player))
+    }
 
       // Load the source into the Player.
       player.load(source).catch(function(error) {
         plugin.getAdapter().fireError(error.code);
       });
-    } else {
-      player.load(source)
-    }
     }
     document.addEventListener('DOMContentLoaded', initPlayer);
 
