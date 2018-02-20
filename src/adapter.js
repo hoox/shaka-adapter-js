@@ -197,7 +197,9 @@ youbora.adapters.Shaka2 = youbora.Adapter.extend({
 
   /** Listener for 'seeking' event. */
   seekingListener: function (e) {
-    this.fireSeekBegin()
+    if (this.flags.isPaused) {
+      this.fireSeekBegin()
+    }
   },
 
   /** Listener for 'seeked' event. */
