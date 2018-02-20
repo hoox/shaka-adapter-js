@@ -150,6 +150,7 @@ youbora.adapters.Shaka2 = youbora.Adapter.extend({
   /** Listener for 'playing' event. */
   playingListener: function (e) {
     this.fireResume()
+    this.fireStart()
     this.fireJoin()
   },
 
