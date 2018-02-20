@@ -41,7 +41,7 @@ youbora.adapters.Shaka2 = youbora.Adapter.extend({
 
   /** Override to return video duration */
   getDuration: function () {
-    if (this.getIsLive) return 0
+    if (this.getIsLive()) return null
     return this.tag.duration
   },
 
