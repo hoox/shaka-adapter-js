@@ -50,6 +50,7 @@
       // Load the source into the Player.
       player.load(source).catch(function(error) {
         plugin.getAdapter().errorListener(error);
+        plugin.disable();
       });
     }
     document.addEventListener('DOMContentLoaded', initPlayer);
