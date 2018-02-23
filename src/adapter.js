@@ -98,7 +98,7 @@ youbora.adapters.Shaka2 = youbora.Adapter.extend({
     youbora.Util.logAllEvents(this.tag)
 
     // Enable playhead monitor (buffer = true, seek = false)
-    this.monitorPlayhead(true, false)
+    this.monitorPlayhead(true, true)
 
     // References
     this.references = []
