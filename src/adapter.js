@@ -98,7 +98,7 @@ youbora.adapters.Shaka2 = youbora.Adapter.extend({
     youbora.Util.logAllEvents(this.tag)
 
     // Enable playhead monitor (buffer = true, seek = false)
-    this.monitorPlayhead(true, true)
+    this.monitorPlayhead(true, false)
 
     // References
     this.references = []
@@ -198,9 +198,7 @@ youbora.adapters.Shaka2 = youbora.Adapter.extend({
 
   /** Listener for 'seeking' event. */
   seekingListener: function (e) {
-    if (this.flags.isPaused) {
-      this.fireSeekBegin()
-    }
+    this.fireSeekBegin()
   },
 
   /** Listener for 'seeked' event. */
