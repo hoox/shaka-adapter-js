@@ -1,11 +1,3 @@
-## [Unreleased]
-
+## [6.1.0] - 2018-02-26
 ### Library
-- Packaged with `lib 6.0.0`
-
-### Added
-- feature A
-- feature B
-
-### Fix
-- feature C
+- Packaged with `lib 6.1.12`
