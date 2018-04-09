@@ -1,6 +1,6 @@
 {
   "name": "youbora-adapter-shaka2",
-  "version": "6.1.0",
+  "version": "6.2.0",
   "main": "src/adapter.js",
   "description": "Youbora adapter for shaka2",
   "scripts": {
@@ -12,7 +12,7 @@
     "clean": "rm -rf dist deploy manifest.json"
   },
   "dependencies": {
-    "youboralib": "6.1.12"
+    "youboralib": "6.2.0"
   },
   "devDependencies": {
     "webpack": "^2.2.1",
