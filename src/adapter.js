@@ -1,11 +1,11 @@
 var youbora = require('youboralib')
 var manifest = require('../manifest.json')
 
-youbora.adapters.Shaka2 = youbora.Adapter.extend({
+youbora.adapters.Shaka = youbora.Adapter.extend({
 
   constructor: function (player) {
-    youbora.adapters.Shaka2.__super__.constructor.call(this, player)
-    this.tag = this.player.getMediaElement()
+    youbora.adapters.Shaka.__super__.constructor.call(this, player)
+    this.tag = this.player.getMediaElement ? this.player.getMediaElement() : this.player.a
   },
 
   /** Override to return current plugin version */
@@ -25,13 +25,16 @@ youbora.adapters.Shaka2 = youbora.Adapter.extend({
 
   /** Override to return Frames Per Secon (FPS) */
   getFramesPerSecond: function () {
-    var tracks = this.player.getVariantTracks()
-    for (var i in tracks) {
-      var track = tracks[i]
-      if (track.active && (track.type == "video" || track.type == "variant")) {
-        return track.frameRate
+    if (this.player.getVariantTracks) {
+      var tracks = this.player.getVariantTracks()
+      for (var i in tracks) {
+        var track = tracks[i]
+        if (track.active && (track.type == "video" || track.type == "variant")) {
+          return track.frameRate
+        }
       }
     }
+    return null
   },
 
   /** Override to return dropped frames since start */
@@ -47,18 +50,36 @@ youbora.adapters.Shaka2 = youbora.Adapter.extend({
 
   /** Override to return current bitrate */
   getBitrate: function () {
-    return this.player.getStats().streamBandwidth
+    var stats = this.player.getStats()
+    if (typeof stats.streamBandwidth != "undefined") {
+      return stats.streamBandwidth
+    }
+    if (typeof stats.streamStats != "undefined") {
+      return stats.streamStats.videoBandwidth
+    }
+    return null
   },
 
   /** Override to return rendition */
   getRendition: function () {
-    var tracks = this.player.getVariantTracks()
-    for (var i in tracks) {
-      var track = tracks[i]
-      if (track.active && (track.type == "video" || track.type == "variant")) {
-        return youbora.Util.buildRenditionString(track.width, track.height, track.bandwidth)
+    if (this.player.getVariantTracks) {
+      var tracks = this.player.getVariantTracks()
+      for (var i in tracks) {
+        var track = tracks[i]
+        if (track.active && (track.type == "video" || track.type == "variant")) {
+          return youbora.Util.buildRenditionString(track.width, track.height, track.bandwidth)
+        }
+      }
+    } else if (this.player.getVideoTracks) {
+      var tracks = this.player.getVideoTracks()
+      for (var i in tracks) {
+        var track = tracks[i]
+        if (track.active) {
+          return youbora.Util.buildRenditionString(track.width, track.height, track.bandwidth)
+        }
       }
     }
+    return null
   },
 
   /** Override to return user bandwidth throughput */
@@ -78,12 +99,17 @@ youbora.adapters.Shaka2 = youbora.Adapter.extend({
 
   /** Override to return resource URL. */
   getResource: function () {
-    return this.player.getManifestUri()
+    return this.player.getManifestUri ? this.player.getManifestUri : this.tag.currentSrc
   },
 
   /** Override to return player version */
   getPlayerVersion: function () {
-    return shaka.Player.version
+    if (shaka.Player) {
+      return shaka.Player.version
+    } if (shaka.player) {
+      return shaka.player.Player.version
+    }
+    return null
   },
 
   /** Override to return player's name */
@@ -93,7 +119,7 @@ youbora.adapters.Shaka2 = youbora.Adapter.extend({
 
   /** Register listeners to this.player. */
   registerListeners: function () {
-    this.tag = this.player.getMediaElement()
+    this.tag = this.player.getMediaElement ? this.player.getMediaElement() : this.player.a
     // Console all events if logLevel=DEBUG
     youbora.Util.logAllEvents(this.tag)
 
@@ -158,33 +184,35 @@ youbora.adapters.Shaka2 = youbora.Adapter.extend({
   errorListener: function (e) {
     var msg = "unknown"
     // Error codes: https://shaka-player-demo.appspot.com/docs/api/shaka.util.Error.html
-    switch (e.category) {
-      case 1:
-        msg = "network"
-        break
-      case 2:
-        msg = "text"
-        break
-      case 3:
-        msg = "media"
-        break
-      case 4:
-        msg = "manifest"
-        break
-      case 5:
-        msg = "streaming"
-        break
-      case 6:
-        msg = "drm"
-        break
-      case 7:
-        msg = "player"
-        break
-      case 8:
-        msg = "cast"
-        break
-      case 9:
-        msg = "storage"
+    if (e.category) {
+      switch (e.category) {
+        case 1:
+          msg = "network"
+          break
+        case 2:
+          msg = "text"
+          break
+        case 3:
+          msg = "media"
+          break
+        case 4:
+          msg = "manifest"
+          break
+        case 5:
+          msg = "streaming"
+          break
+        case 6:
+          msg = "drm"
+          break
+        case 7:
+          msg = "player"
+          break
+        case 8:
+          msg = "cast"
+          break
+        case 9:
+          msg = "storage"
+      }
     }
     if (e.detail && e.detail.code) {
       this.fireError(e.detail.code, msg)
@@ -212,4 +240,4 @@ youbora.adapters.Shaka2 = youbora.Adapter.extend({
   }
 })
 
-module.exports = youbora.adapters.Shaka2
+module.exports = youbora.adapters.Shaka

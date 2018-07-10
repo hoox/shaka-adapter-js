@@ -36,7 +36,7 @@
 
           // init plugin
     if (typeof youbora != "undefined" &&
-      typeof youbora.adapters.Shaka2 != "undefined") {
+      typeof youbora.adapters.Shaka != "undefined") {
       youbora.Log.logLevel = youbora.Log.Level.DEBUG
       window.plugin = new youbora.Plugin({
         'accountCode': 'powerdev',
@@ -45,7 +45,7 @@
         'content.transactionCode': "transactionTest",
       })
 
-      plugin.setAdapter(new youbora.adapters.Shaka2(player))
+      plugin.setAdapter(new youbora.adapters.Shaka(player))
     }
 
       // Load the source into the Player.

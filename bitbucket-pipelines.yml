@@ -14,9 +14,6 @@ pipelines:
           - if [ $? -eq 0 ]; then
           - npm run deployable --verbose
           - bash <(curl -s https://codecov.io/bash)
-          - mkdir -p ~/.ssh
-          - echo $QA_KNOWN_HOSTS >> ~/.ssh/known_hosts
-          - (umask 077; echo $QA_SSH_KEY | base64 --decode > ~/.ssh/id_rsa)
           - scp -r deploy/last-build/* nicedeployer@qa-smartplugin.youbora.com:/home/nicedeployer/qa/catalog/v6/js
           - fi
 
@@ -29,9 +26,6 @@ pipelines:
             - if [ $? -eq 0 ]; then
             - npm run deployable --verbose
             - bash <(curl -s https://codecov.io/bash)
-            - mkdir -p ~/.ssh
-            - echo $QA_KNOWN_HOSTS >> ~/.ssh/known_hosts
-            - (umask 077; echo $QA_SSH_KEY | base64 --decode > ~/.ssh/id_rsa)
             - scp -r deploy/version/* nicedeployer@qa-smartplugin.youbora.com:/home/nicedeployer/qa/catalog/v6/js
             - fi
 
@@ -58,9 +52,6 @@ pipelines:
             # codecov
             - bash <(curl -s https://codecov.io/bash)
             # deploy PROD file to qa
-            - mkdir -p ~/.ssh
-            - echo $QA_KNOWN_HOSTS >> ~/.ssh/known_hosts
-            - (umask 077; echo $QA_SSH_KEY | base64 --decode > ~/.ssh/id_rsa)
             - scp -r deploy/prodfile/* nicedeployer@qa-smartplugin.youbora.com:/home/nicedeployer/qa/catalog/v6/js
             - fi
     npm-publish:
@@ -69,6 +60,35 @@ pipelines:
             - npm install --verbose
             - npm test --verbose
             - if [ $? -eq 0 ]; then
+            # npm publish
+            - echo $NPM_TOKEN >> ~/.npmrc
+            - npm run manifest --verbose
+            - npm publish --verbose -f
+            - fi
+    deployment:
+      - step:
+         deployment: production
+         script:
+            - npm install --verbose
+            - npm test --verbose
+            - if [ $? -eq 0 ]; then
+            # Generate files
+            - npm run deployable --verbose
+            # S3
+            - apt-get update
+            - apt-get -y install awscli
+            - mkdir ~/.aws
+            - echo "[default]" >> ~/.aws/credentials
+            - echo "aws_access_key_id="$AWS_ACCESS_KEY_ID >>  ~/.aws/credentials
+            - echo "aws_secret_access_key="$AWS_SECRET_ACCESS_KEY >>  ~/.aws/credentials
+            - echo "[default]" >> ~/.aws/config
+            - echo "region="$AWS_DEFAULT_REGION >> ~/.aws/config
+            - echo "output=json" >> ~/.aws/config
+            - aws s3 cp deploy/prod/ s3://youbora-smartplugins/v6/js/ --recursive --acl=public-read
+            # codecov
+            - bash <(curl -s https://codecov.io/bash)
+            # deploy PROD file to qa
+            - scp -r deploy/prodfile/* nicedeployer@qa-smartplugin.youbora.com:/home/nicedeployer/qa/catalog/v6/js
             # npm publish
             - echo $NPM_TOKEN >> ~/.npmrc
             - npm run manifest --verbose

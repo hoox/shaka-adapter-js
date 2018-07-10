@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>Shaka Player 2</title>
   <!-- Load the Shaka Player library. -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/2.3.0/shaka-player.compiled.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/1.6.5/shaka-player.compiled.js"></script>
   <!---->
   <!-- YouboraLib -->
   <script src="../dist/sp.min.js"></script>
@@ -14,28 +14,44 @@
 
 <body>
   <video id="video1" width="640" height="480" crossorigin="anonymous" controls>
-        Your browser does not support HTML5 video.
-    </video>
+      Your browser does not support HTML5 video.
+  </video>
   <script>
-    function initPlayer() {
+  function initPlayer() {
       // Install polyfills.
-      shaka.polyfill.installAll();
+      shaka.polyfill.Fullscreen.install();
+      shaka.polyfill.MediaKeys.install();
+      shaka.polyfill.VideoPlaybackQuality.install();
 
       // Find the video element.
       var video = document.getElementById('video1');
 
       // Construct a Player to wrap around it.
-      var player = new shaka.Player(video);
+      var player = new shaka.player.Player(video);
 
       // Attach the player to the window so that it can be easily debugged.
       window.player = player;
 
-      /* Dash */
-      var source = 'https://turtle-tube.appspot.com/t/t2/dash.mpd';
+      // Listen for errors from the Player.
+      player.addEventListener('error', function(event) {
+          console.error(event);
+      });
 
+      /* Dash */
+      var mpdUrl = 'https://turtle-tube.appspot.com/t/t2/dash.mpd';
+      var estimator = new shaka.util.EWMABandwidthEstimator();
+      var source = new shaka.player.DashVideoSource(mpdUrl, null, estimator);
+
+
+      /* http * /
+      var source = new shaka.player.HttpVideoSource("assets/bear-av-enc.webm", "", {
+          'keySystem': 'org.w3.clearkey',
+          'licenseServerUrl': 'assets/test_license.json'
+      });
+      /**/
 
           // init plugin
-    if (typeof youbora != "undefined" &&
+      if (typeof youbora != "undefined" &&
       typeof youbora.adapters.Shaka != "undefined") {
       youbora.Log.logLevel = youbora.Log.Level.DEBUG
       window.plugin = new youbora.Plugin({
@@ -53,10 +69,11 @@
         plugin.getAdapter().errorListener(error);
         plugin.disable();
       });
-    }
-    document.addEventListener('DOMContentLoaded', initPlayer);
 
+  }
+  document.addEventListener('DOMContentLoaded', initPlayer);
   </script>
 </body>
+
 
 </html>
