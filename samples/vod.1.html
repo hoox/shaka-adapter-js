@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Shaka Player 2</title>
+  <!-- Load the Shaka Player library. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/2.3.0/shaka-player.compiled.js"></script>
+  <!---->
+  <!-- YouboraLib -->
+  <script src="../dist/sp.min.js"></script>
+  <!---->
+</head>
+
+<body>
+  <video id="video1" width="640" height="480" crossorigin="anonymous" controls>
+        Your browser does not support HTML5 video.
+    </video>
+  <script>
+    function initPlayer() {
+      // Install polyfills.
+      shaka.polyfill.installAll();
+
+      // Find the video element.
+      var video = document.getElementById('video1');
+
+      // Construct a Player to wrap around it.
+      var player = new shaka.Player(video);
+
+      // Attach the player to the window so that it can be easily debugged.
+      window.player = player;
+
+      /* Dash */
+      var source = 'https://storage.googleapis.com/shaka-demo-assets/angel-one-hls/hls.m3u8';
+
+
+          // init plugin
+    if (typeof youbora != "undefined" &&
+      typeof youbora.adapters.Shaka != "undefined") {
+      youbora.Log.logLevel = youbora.Log.Level.DEBUG
+      window.plugin = new youbora.Plugin({
+        'accountCode': 'powerdev',
+        'parse.CDNNode': true,
+        'content.title': 'Title vod dash',
+        'content.transactionCode': "transactionTest",
+      })
+
+      plugin.setAdapter(new youbora.adapters.Shaka(player))
+    }
+
+      // Load the source into the Player.
+      player.load(source).catch(function(error) {
+        plugin.getAdapter().errorListener(error);
+        plugin.disable();
+      });
+    }
+    document.addEventListener('DOMContentLoaded', initPlayer);
+
+  </script>
+</body>
+
+</html>

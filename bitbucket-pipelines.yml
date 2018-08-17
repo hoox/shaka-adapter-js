@@ -14,7 +14,7 @@ pipelines:
           - if [ $? -eq 0 ]; then
           - npm run deployable --verbose
           - bash <(curl -s https://codecov.io/bash)
-          - scp -r deploy/last-build/* nicedeployer@qa-smartplugin.youbora.com:/home/nicedeployer/qa/catalog/v6/js
+          - scp -r deploy/last-build/* npawdev@qa-smartplugin.youbora.com:/home/npawdev/qa/catalog/v6/js
           - fi
 
   tags:
@@ -26,7 +26,7 @@ pipelines:
             - if [ $? -eq 0 ]; then
             - npm run deployable --verbose
             - bash <(curl -s https://codecov.io/bash)
-            - scp -r deploy/version/* nicedeployer@qa-smartplugin.youbora.com:/home/nicedeployer/qa/catalog/v6/js
+            - scp -r deploy/version/* npawdev@qa-smartplugin.youbora.com:/home/npawdev/qa/catalog/v6/js
             - fi
 
   custom: # Pipelines that are triggered manually
@@ -52,7 +52,7 @@ pipelines:
             # codecov
             - bash <(curl -s https://codecov.io/bash)
             # deploy PROD file to qa
-            - scp -r deploy/prodfile/* nicedeployer@qa-smartplugin.youbora.com:/home/nicedeployer/qa/catalog/v6/js
+            - scp -r deploy/prodfile/* npawdev@qa-smartplugin.youbora.com:/home/npawdev/qa/catalog/v6/js
             - fi
     npm-publish:
       - step:
@@ -88,7 +88,7 @@ pipelines:
             # codecov
             - bash <(curl -s https://codecov.io/bash)
             # deploy PROD file to qa
-            - scp -r deploy/prodfile/* nicedeployer@qa-smartplugin.youbora.com:/home/nicedeployer/qa/catalog/v6/js
+            - scp -r deploy/prodfile/* npawdev@qa-smartplugin.youbora.com:/home/npawdev/qa/catalog/v6/js
             # npm publish
             - echo $NPM_TOKEN >> ~/.npmrc
             - npm run manifest --verbose
