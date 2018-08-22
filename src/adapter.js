@@ -44,7 +44,6 @@ youbora.adapters.Shaka = youbora.Adapter.extend({
 
   /** Override to return video duration */
   getDuration: function () {
-    if (this.getIsLive()) return null
     return this.tag.duration
   },
 
@@ -94,12 +93,12 @@ youbora.adapters.Shaka = youbora.Adapter.extend({
 
   /** Override to recurn true if live and false if VOD */
   getIsLive: function () {
-    return this.player.isLive()
+    return this.player.isLive() ? true : !this.getDuration()
   },
 
   /** Override to return resource URL. */
   getResource: function () {
-    return this.player.getManifestUri ? this.player.getManifestUri : this.tag.currentSrc
+    return this.player.getManifestUri ? this.player.getManifestUri() : this.tag.currentSrc
   },
 
   /** Override to return player version */

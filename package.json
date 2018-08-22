@@ -1,6 +1,6 @@
 {
   "name": "youbora-adapter-shaka",
-  "version": "6.4.0",
+  "version": "6.4.1",
   "main": "src/adapter.js",
   "description": "Youbora adapter for shaka",
   "scripts": {

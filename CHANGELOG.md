@@ -1,3 +1,8 @@
+## [6.4.1] - 2018-08-22
+### Fix
+- Fixed source getter
+- Fixed isLive getter
+
 ## [6.4.0] - 2018-08-17
 ### Library
 - Packaged with `lib 6.4.1`
