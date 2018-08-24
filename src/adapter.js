@@ -20,7 +20,8 @@ youbora.adapters.Shaka = youbora.Adapter.extend({
 
   /** Override to return current playrate */
   getPlayrate: function () {
-    return this.player.getPlaybackRate()
+    if (this.flags.isPaused) return 0
+    return this.player.getPlaybackRate() || 1
   },
 
   /** Override to return Frames Per Secon (FPS) */

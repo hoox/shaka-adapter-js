@@ -1,3 +1,7 @@
+## [6.4.2] - 2018-08-24
+### Fix
+- Fixed playrate for live content being reported as 0
+
 ## [6.4.1] - 2018-08-22
 ### Fix
 - Fixed source getter
