@@ -1,3 +1,7 @@
+## [6.4.3] - 2018-08-18
+### Library
+- Packaged with `lib 6.4.4`
+
 ## [6.4.2] - 2018-08-24
 ### Fix
 - Fixed playrate for live content being reported as 0
