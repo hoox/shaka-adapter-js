@@ -1,3 +1,9 @@
+## [6.4.5] - 2018-12-20
+### Added
+- New method to get resource
+### Library
+- Packaged with `lib 6.4.12`
+
 ## [6.4.4] - 2018-08-29
 ### Library
 - Packaged with `lib 6.4.5`

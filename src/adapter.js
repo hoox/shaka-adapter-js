@@ -99,7 +99,12 @@ youbora.adapters.Shaka = youbora.Adapter.extend({
 
   /** Override to return resource URL. */
   getResource: function () {
-    return this.player.getManifestUri ? this.player.getManifestUri() : this.tag.currentSrc
+    if (this.player.getAssetUri && this.player.getAssetUri()) {
+      return this.player.getAssetUri()
+    } else if (this.player.getManifestUri && this.player.getManifestUri()) {
+      return this.player.getManifestUri()
+    }
+    return this.tag.currentSrc
   },
 
   /** Override to return player version */
