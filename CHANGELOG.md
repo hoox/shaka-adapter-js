@@ -1,3 +1,9 @@
+## [6.4.6] - 2019-02-06
+### Added
+- Error listener for the player, not the tag
+### Library
+- Packaged with `lib 6.4.15`
+
 ## [6.4.5] - 2018-12-20
 ### Added
 - New method to get resource

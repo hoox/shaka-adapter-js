@@ -1,6 +1,6 @@
 {
   "name": "youbora-adapter-shaka",
-  "version": "6.4.5",
+  "version": "6.4.6",
   "main": "src/adapter.js",
   "description": "Youbora adapter for shaka",
   "scripts": {
@@ -12,7 +12,7 @@
     "clean": "rm -rf dist deploy manifest.json"
   },
   "dependencies": {
-    "youboralib": "6.4.12"
+    "youboralib": "6.4.15"
   },
   "devDependencies": {
     "webpack": "^4.15.1",

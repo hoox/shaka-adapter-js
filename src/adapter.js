@@ -133,11 +133,13 @@ youbora.adapters.Shaka = youbora.Adapter.extend({
 
     // References
     this.references = []
+    this.referencesPlayer = []
     this.references['play'] = this.playListener.bind(this)
     this.references['loadstart'] = this.autoplayListener.bind(this)
     this.references['pause'] = this.pauseListener.bind(this)
     this.references['playing'] = this.playingListener.bind(this)
     this.references['error'] = this.errorListener.bind(this)
+    this.referencesPlayer['error'] = this.errorListener.bind(this)
     this.references['seeking'] = this.seekingListener.bind(this)
     this.references['seeked'] = this.seekedListener.bind(this)
     this.references['ended'] = this.endedListener.bind(this)
@@ -145,6 +147,9 @@ youbora.adapters.Shaka = youbora.Adapter.extend({
     // Register listeners
     for (var key in this.references) {
       this.tag.addEventListener(key, this.references[key])
+    }
+    for (var key in this.referencesPlayer) {
+      this.player.addEventListener(key, this.referencesPlayer[key])
     }
   },
 
