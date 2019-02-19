@@ -138,7 +138,7 @@ youbora.adapters.Shaka = youbora.Adapter.extend({
     this.references['loadstart'] = this.autoplayListener.bind(this)
     this.references['pause'] = this.pauseListener.bind(this)
     this.references['playing'] = this.playingListener.bind(this)
-    this.references['error'] = this.errorListener.bind(this)
+    //this.references['error'] = this.errorListener.bind(this)
     this.referencesPlayer['error'] = this.errorListener.bind(this)
     this.references['seeking'] = this.seekingListener.bind(this)
     this.references['seeked'] = this.seekedListener.bind(this)
@@ -229,7 +229,7 @@ youbora.adapters.Shaka = youbora.Adapter.extend({
     } else {
       this.fireError(e.code, msg)
     }
-    if (e.severity && e.severity === 2) { // Critical
+    if ((e.severity && e.severity === 2) || (e.detail.severity && e.detail.severity === 2)) { // Critical
       this.fireStop()
     }
   },

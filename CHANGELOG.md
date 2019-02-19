@@ -1,3 +1,11 @@
+## [6.4.7] - 2019-02-19
+### Added
+- Error listener for the tag removed, not needed anymore
+### Fixed
+- Error severity detection
+### Library
+- Packaged with `lib 6.4.16`
+
 ## [6.4.6] - 2019-02-06
 ### Added
 - Error listener for the player, not the tag
