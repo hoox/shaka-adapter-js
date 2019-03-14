@@ -19,7 +19,7 @@ dist/
 
 #Configs
 jsconfig.json
-manifest.json
+# manifest.json
 .yo-rc.json
 
 #logs

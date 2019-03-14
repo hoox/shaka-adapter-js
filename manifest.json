@@ -1,0 +1,28 @@
+{
+  "name": "shaka",
+  "type": "adapter",
+  "tech": "js",
+  "author": "Jesus Lopez",
+  "version": "6.4.7-patched",
+  "built": "2019-03-15",
+  "repo": "https://github.com/hoox/shaka-adapter-js",
+  "libVersion": "^6.4.16",
+  "features": {
+    "buffer": "monitor",
+    "seek": "native",
+    "getters": [
+      "getPlayhead",
+      "getPlayrate",
+      "getFramesPerSecond",
+      "getDroppedFrames",
+      "getDuration",
+      "getBitrate",
+      "getThroughput",
+      "getRendition",
+      "getTitle",
+      "getIsLive",
+      "getResource"
+    ]
+  },
+  "ads": []
+}

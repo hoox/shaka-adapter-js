@@ -1,6 +1,6 @@
 {
   "name": "youbora-adapter-shaka",
-  "version": "6.4.7",
+  "version": "6.4.7-patched",
   "main": "src/adapter.js",
   "description": "Youbora adapter for shaka",
   "scripts": {
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://bitbucket.org/npaw/shaka-adapter-js"
+    "url": "git+https://github.com/hoox/shaka-adapter-js"
   },
   "author": "Jesus Lopez",
   "license": "MIT",
