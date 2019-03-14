@@ -156,7 +156,9 @@ youbora.adapters.Shaka = youbora.Adapter.extend({
   /** Unregister listeners to this.player. */
   unregisterListeners: function () {
     // Disable playhead monitoring
-    this.monitor.stop()
+    if (this.monitor) {
+      this.monitor.stop()
+    }
 
     // unregister listeners
     if (this.tag && this.references) {
